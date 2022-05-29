@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "whateveriwant",
+  "version": "${version}",
+  "name": "Whateveriwant",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/whateveriwant/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "aikoyori.whateveriwant.client.WhateveriwantClient"
+    ],
+    "main": [
+      "aikoyori.whateveriwant.Whateveriwant"
+    ]
+  },
+  "mixins": [
+    "whateveriwant.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "minecraft": ">=1.18.1"
+  }
+}

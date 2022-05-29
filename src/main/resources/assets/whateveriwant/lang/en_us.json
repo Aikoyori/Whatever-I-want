@@ -1,0 +1,5 @@
+{
+  "gamerule.movementModifier": "Random mid-air Movement Factor %",
+  "gamerule.fallDamageMultiplierPercentage": "Fall Damage Multiplier %",
+  "gamerule.bounceFactorPercent": "Bounce Factor %"
+}
