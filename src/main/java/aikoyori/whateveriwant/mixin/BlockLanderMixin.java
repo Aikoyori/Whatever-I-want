@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
@@ -36,14 +37,18 @@ public class BlockLanderMixin {
     public void bounceStuff(Entity instance, Vec3d velocity){
 
         if(!instance.world.isClient) {
-            if(instance.getServer().getGameRules().getInt(Whateveriwant.bounceFactorPercent)!=0) {
-                Vec3d vec3d = instance.getVelocity();
-                if (vec3d.y < 0.0) {
-                    double d = instance instanceof LivingEntity ? 1.0 : 0.8;
-                    d *= instance.getServer().getGameRules().getInt(Whateveriwant.bounceFactorPercent) / 100.0f;
-                    instance.setVelocity(vec3d.x, -vec3d.y * d, vec3d.z);
+            if(!(instance instanceof PlayerEntity))
+            {
+                if(instance.getServer().getGameRules().getInt(Whateveriwant.bounceFactorPercent)!=0) {
+                    Vec3d vec3d = instance.getVelocity();
+                    if (vec3d.y < 0.0) {
+                        double d = instance instanceof LivingEntity ? 1.0 : 0.8;
+                        d *= instance.getServer().getGameRules().getInt(Whateveriwant.bounceFactorPercent) / 100.0f;
+                        instance.setVelocity(vec3d.x, -vec3d.y * d, vec3d.z);
+                    }
                 }
             }
+
         }
     }
 

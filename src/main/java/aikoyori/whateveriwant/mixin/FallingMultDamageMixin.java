@@ -2,6 +2,7 @@ package aikoyori.whateveriwant.mixin;
 
 import aikoyori.whateveriwant.Whateveriwant;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
@@ -32,6 +33,10 @@ public abstract class FallingMultDamageMixin {
 
     @Shadow protected abstract int computeFallDamage(float fallDistance, float damageMultiplier);
 
+    @Shadow public abstract boolean damage(DamageSource source, float amount);
+
+    @Shadow public abstract void heal(float amount);
+
     @Redirect(method = "handleFallDamage",at=@At(target = "Lnet/minecraft/entity/LivingEntity;computeFallDamage(FF)I",value = "INVOKE"))
     private int fallDamageMultMixin(LivingEntity instance, float fallDistance, float damageMultiplier)
     {
@@ -48,5 +53,24 @@ public abstract class FallingMultDamageMixin {
         return this.computeFallDamage(fallDistance,damageMultiplier);
     }
 
+    @Redirect(method = "handleFallDamage",at=@At(target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z",value = "INVOKE"))
+    public boolean damageButNegatedLol(LivingEntity instance, DamageSource source, float amount)
+    {
+        LivingEntity liv = instance;
+        System.out.println(amount);
+        if(!liv.world.isClient)
+        {
+            if(amount<0)
+            {
+                liv.heal((amount)-3.0f);
+                return this.damage(source,0.0f);
+            }
+            else
+            {
+                return this.damage(source,amount);
+            }
+        }
+        return false;
 
+    }
 }

@@ -2,6 +2,7 @@ package aikoyori.whateveriwant.mixin;
 
 import aikoyori.whateveriwant.Whateveriwant;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,11 +19,15 @@ public class UnfallingBlock {
         Entity fall = (Entity)(Object)this;
         if(!fall.world.isClient)
         {
-            int percent = fall.getServer().getGameRules().getInt(Whateveriwant.movementModifier);
-            Random rand = new Random();
-            if (!fall.hasNoGravity() && !fall.isOnGround()) {
-                Vec3d vecVel = new Vec3d(rand.nextDouble()-0.5d,rand.nextDouble()-0.5d,rand.nextDouble()-0.5d ).multiply(0.5*(percent/100.0));
-                fall.addVelocity(vecVel.x,vecVel.y+(vecVel.y + 0.02)*percent/100.0,vecVel.z);
+            if(!(fall instanceof PlayerEntity))
+            {
+                int percent = fall.getServer().getGameRules().getInt(Whateveriwant.movementModifier);
+                Random rand = new Random();
+                if (!fall.hasNoGravity() && !fall.isOnGround()) {
+                    Vec3d vecVel = new Vec3d(rand.nextDouble()-0.5d,rand.nextDouble()-0.5d,rand.nextDouble()-0.5d ).multiply(0.5*(percent/100.0));
+                    fall.addVelocity(vecVel.x,vecVel.y+(vecVel.y + 0.02)*percent/100.0,vecVel.z);
+            }
+
             }
         }
     }
