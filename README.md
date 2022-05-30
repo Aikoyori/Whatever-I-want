@@ -6,5 +6,8 @@ Basically it adds gamerules that changes the gameplay significantly, namely:
 3. bounceFactorPercent: makes every block bouncy based on Slime Block mechanic! Higher value means they bounce higher compared to default slime block behavior in percent.
 
 # How build lo
-build jar
-`gradlew build` 
+### build jar
+
+```
+gradlew build
+```
